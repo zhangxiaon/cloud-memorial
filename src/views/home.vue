@@ -8,7 +8,7 @@
 <script setup>
 import Map from '../components/Map.vue'
 const addOp = () => {
-  window.open('/#/addOp')
+  window.open('./#/addOp')
 }
 </script>
 <style scoped>
