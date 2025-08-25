@@ -1,7 +1,7 @@
 <template>
-  <Map />
+  <router-view/>
 </template>
 
 <script setup>
-import Map from './components/Map.vue'
+
 </script>
