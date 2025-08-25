@@ -104,7 +104,7 @@ onMounted(async () => {
     // 点击显示 InfoWindow
     marker.on("click", () => {
       window.localStorage.setItem('grave', JSON.stringify(grave))
-      window.open(`/#/mapView`)
+      window.open(`./#/mapView`)
     });
   });
 });
