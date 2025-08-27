@@ -1,6 +1,6 @@
 
 # 云墓园 (Cloud Memorial)
-https://zhangxiaon.github.io/cloud-memorial/#/
+[项目地址](https://zhangxiaon.github.io/cloud-memorial/#/)
 
 
 ## 🤝 初衷
@@ -31,7 +31,7 @@ https://zhangxiaon.github.io/cloud-memorial/#/
 - **生平简介**：用以展示纪念内容（这里包含的图片，请直接上传到Issue）
 - **照片**：使用可公开访问的链接（GitHub Issue 附件、图床等均可），仅支持一张照片
 - - `lat, lng`：经纬度坐标（可以点击首页左上角坐标拾取器，获取经纬度坐标）
-- ![img.png](img.png)
+![经纬度坐标](public/img.png)
 
 3. 提交后，等待一分钟，页面会自动更新，在地图上生成标记点。
 
