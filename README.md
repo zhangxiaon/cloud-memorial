@@ -1,6 +1,6 @@
 
 # 云墓园 (Cloud Memorial)
-[项目地址](https://zhangxiaon.github.io/cloud-memorial/#/)
+[访问地址](https://zhangxiaon.github.io/cloud-memorial/#/)
 
 
 ## 🤝 初衷
