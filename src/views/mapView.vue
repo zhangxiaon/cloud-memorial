@@ -135,13 +135,14 @@ const openBing = () => {
   background: linear-gradient(145deg, #eee 0%, #ccc 100%);
   border: 2px solid #666;
   border-radius: 0 0 10px 10px;
-  padding: 5px 0;
+  padding: 8px;
   margin-top: -2px;
   box-shadow: inset -2px -2px 6px rgba(0,0,0,0.2), 2px 2px 8px rgba(0,0,0,0.3);
   transform: rotateX(2deg); /* 轻微倾斜增加立体感 */
   background-image: url('../assets/bg.jpg'); /* 石纹纹理 */
   background-size: cover;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* 标题 */
@@ -149,7 +150,7 @@ const openBing = () => {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 6px;
-  color: #ccc;
+  color: #fff;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
@@ -160,16 +161,18 @@ const openBing = () => {
   line-height: 1.4em;          /* 调整行间距，模拟刻字效果 */
   font-family: "SimSun", "Georgia", serif; /* 模拟碑文字体 */
   font-size: 14px;
-  color: #ccc;
+  color: #fff;
   width: 100%;
   height: 110px;
   text-align: start;
   overflow-x: auto;
   margin-bottom: 8px;
+  padding: 0 10px;
 }
 .tomb-text img{
-  height: 100%;
+  height: 70%;
   width: auto;
+  margin: 15% 0;
 }
 
 

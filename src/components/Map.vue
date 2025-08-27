@@ -38,15 +38,30 @@ async function fetchIssues() {
         ? issue.body.slice(0, photoIndex).trim()
         : issue.body.trim();
 
-// 2️⃣ 照片字段：只取“照片：”之后的第一张图片
+    // 2️⃣ 照片字段：取“照片：”之后到“地理位置：”前的区域
     let photo = "";
     if (photoIndex > -1) {
-      const geoIndex = issue.body.indexOf('地理位置：', photoIndex);
-      const photoArea = geoIndex > -1
-          ? issue.body.slice(photoIndex, geoIndex)
-          : issue.body.slice(photoIndex);
-      const photoMatch = photoArea.match(/<img.*?src="(.*?)"/);
-      photo = photoMatch ? photoMatch[1] : "";
+      const geoIndex = issue.body.indexOf("地理位置：", photoIndex);
+      const photoArea =
+          geoIndex > -1
+              ? issue.body.slice(photoIndex, geoIndex)
+              : issue.body.slice(photoIndex);
+
+      // 优先匹配常见图片格式 + GitHub 附件
+      const urlMatch = photoArea.match(
+          /(https?:\/\/[^\s)]+?\.(?:png|jpe?g|gif)|https?:\/\/github\.com\/user-attachments\/[^\s)]+)/i
+      );
+
+      if (urlMatch) {
+        photo = urlMatch[0];
+      } else {
+        // 兜底策略：提取第一个 http/https 链接，尝试作为图片
+        const fallbackMatch = photoArea.match(/https?:\/\/[^\s)]+/i);
+        if (fallbackMatch) {
+          photo = fallbackMatch[0];
+          console.warn("兜底使用非标准图片链接:", photo);
+        }
+      }
     }
 
     // 3️⃣ 地理位置
