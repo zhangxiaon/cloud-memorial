@@ -51,17 +51,25 @@ const loadAmap = async() => {
   const satellite = new AMap.TileLayer.Satellite();
   aMapInstance.add(satellite);
 
-  const marker = new AMap.Marker({
-    position: [lng, lat],
-    map: aMapInstance,
-    content: grave.photo ? `<img class="marker-icon" src="${grave.photo}" />` : "",
-    anchor: "bottom-center",
-    title,
-  });
-
-  // 点击显示 InfoWindow
-  marker.on("click", () => {
-    const content = `
+  const img = new Image();
+  img.src = grave.photo;
+  img.onerror = () => { img.src = 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png' }; // 图片失败回退默认图
+  img.onload = () => {
+    // 创建 marker
+    const marker = new AMap.Marker({
+      position: [lng, lat],
+      map:aMapInstance,
+      content: `<img class="marker-icon" src="${img.src}" />`,
+      anchor: 'bottom-center',
+      title
+    });
+    // 点击显示 InfoWindow
+    let opening = false;
+    marker.on("click", () => {
+      if (opening) return;
+      opening = true;
+      setTimeout(() => opening = false, 300);
+      const content = `
       <div class="tombstone-3d">
         <div class="tomb-top">
           <img src="${grave.photo}" alt="">
@@ -74,21 +82,25 @@ const loadAmap = async() => {
       </div>
     `;
 
-    const infoWindow = new AMap.InfoWindow({
-      content,
-      offset: new AMap.Pixel(0, -30),
-      isCustom: true,
-    });
-    infoWindow.open(aMapInstance, [lng, lat]);
+      const infoWindow = new AMap.InfoWindow({
+        content,
+        offset: new AMap.Pixel(0, -30),
+        isCustom: true,
+      });
+      infoWindow.open(aMapInstance, [lng, lat]);
 
-    // 延迟绑定事件，确保 InfoWindow 渲染完成
-    setTimeout(() => {
-      const textEl = document.querySelector(".tomb-text");
-      if (textEl) {
-        textEl.addEventListener("wheel", (e) => e.stopPropagation());
-      }
-    }, 100);
-  });
+      // 延迟绑定事件，确保 InfoWindow 渲染完成
+      setTimeout(() => {
+        const textEl = document.querySelector(".tomb-text");
+        if (textEl) {
+          textEl.addEventListener("wheel", (e) => e.stopPropagation());
+        }
+      }, 100);
+    });
+  };
+
+
+
 }
 
 // ----------------- Bing 地图 -----------------

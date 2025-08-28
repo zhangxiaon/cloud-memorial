@@ -103,28 +103,50 @@ onMounted(async () => {
   const Satellite = new AMap.TileLayer.Satellite()
   map.add(Satellite);
   const graves = await fetchIssues();
-  graves.forEach(grave => {
+  loadMarkers(graves, map);
+});
+
+async function loadMarkers(graves, map) {
+  // 工具函数：检测图片是否可用，失败用默认图
+  const checkImage = (url) => {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => resolve(url);  // 图片可用
+      img.onerror = () => resolve('https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png'); // 失败回退
+      img.src = url || 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png';
+    });
+  };
+
+  // 先处理所有图片
+  const photos = await Promise.all(graves.map(grave => checkImage(grave.photo)));
+
+  // 遍历 graves 渲染 Marker
+  graves.forEach((grave, index) => {
     if (!grave.lat || !grave.lng) return;
-    // 创建 marker，使用 issue 图片作为 icon
+
     const marker = new AMap.Marker({
       position: [grave.lng, grave.lat],
       map,
-      content: grave.photo ? `<img class="marker-icon" src="${grave.photo}" />` : "",
+      content: `<img class="marker-icon" src="${photos[index]}" />`,
       anchor: 'bottom-center',
       title: grave.title,
     });
 
-    // 点击显示 InfoWindow
-    let opening = false;
-    marker.on("click", () => {
-      if (opening) return;
-      opening = true;
-      setTimeout(() => opening = false, 300);
-      window.localStorage.setItem('grave', JSON.stringify(grave))
-      window.open(`./#/mapView`)
-    });
+    // 点击事件防抖，防止移动端多开
+    marker.on("click", (() => {
+      let opening = false;
+      return () => {
+        if (opening) return;
+        opening = true;
+        setTimeout(() => opening = false, 300);
+        window.localStorage.setItem('grave', JSON.stringify(grave));
+        window.open(`./#/mapView`);
+      };
+    })());
   });
-});
+}
+
+
 </script>
 
 <style>
