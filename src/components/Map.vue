@@ -72,7 +72,6 @@ async function fetchIssues() {
       lat = parseFloat(match.groups.lat || match.groups.lat2);
       lng = parseFloat(match.groups.lng || match.groups.lng2);
     }
-    debugger
     return {
       title: issue.title,
       bio: bio,
@@ -104,7 +103,6 @@ onMounted(async () => {
   const Satellite = new AMap.TileLayer.Satellite()
   map.add(Satellite);
   const graves = await fetchIssues();
-  debugger
   graves.forEach(grave => {
     if (!grave.lat || !grave.lng) return;
     // 创建 marker，使用 issue 图片作为 icon

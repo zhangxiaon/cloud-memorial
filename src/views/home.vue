@@ -1,6 +1,6 @@
 <template>
   <div class="home-box">
-    <div class="op-add" @click="addOp">坐标拾取器</div>
+    <button class="op-add" @click="addOp">坐标拾取器</button>
     <Map></Map>
   </div>
 
@@ -24,6 +24,10 @@ const addOp = () => {
   font-size: 16px;
   border: 1px solid #ccc;
   z-index: 1000;
-  cursor: pointer;
+  background-color: transparent;
+}
+button.op-add:hover,button.op-add:focus {
+  border-color: #ccc;
+  outline:none;
 }
 </style>
