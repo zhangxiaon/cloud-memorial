@@ -137,7 +137,7 @@ const initBingMap = () => {
           <div class="tomb-base"></div>
         </div>
       `,
-        offset: new Microsoft.Maps.Point(0, -60),
+        offset: new Microsoft.Maps.Point(-110, 10),
       }
   );
   infobox.setMap(bingMapInstance);

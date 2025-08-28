@@ -115,7 +115,11 @@ onMounted(async () => {
     });
 
     // 点击显示 InfoWindow
+    let opening = false;
     marker.on("click", () => {
+      if (opening) return;
+      opening = true;
+      setTimeout(() => opening = false, 300);
       window.localStorage.setItem('grave', JSON.stringify(grave))
       window.open(`./#/mapView`)
     });
